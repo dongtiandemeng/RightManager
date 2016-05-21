@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.right.mapper.UserMapper">
+    <select id="validateUser" parameterType="map" resultType="com.right.mapper.User">
+        select  id ,address,loginname,mobilephone,name,password from t_base_user
+        where loginname=#{loginname} and password = #{password}
+    </select>
+    
+</mapper>

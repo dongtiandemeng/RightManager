@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="base" extends= "struts-default">
+        <interceptors>
+            <interceptor name="loginInterceptor" class="com.right.interceptor.LoginInterceptor"></interceptor>
+            <interceptor-stack name="baseInterceptor">
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+                <interceptor-ref name="loginInterceptor"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+        
+        <default-interceptor-ref name="baseInterceptor"></default-interceptor-ref>
+        <global-results>
+            <result name="login" type="redirect">login.jsp</result>
+            <result name="allException">failure.jsp</result>
+        </global-results>
+        <global-exception-mappings>
+            <exception-mapping result="allException" exception="java.lang.Exception"></exception-mapping>
+        </global-exception-mappings>
+    </package>
+    <include file="struts_system.xml"></include>
+</struts>
