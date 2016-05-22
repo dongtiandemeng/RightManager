@@ -6,10 +6,12 @@ import java.util.Map;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.right.dao.MenuDAO;
+import com.right.mapper.Menu;
 
 public class MenuAction extends ActionSupport{
 
-	private List<Map<String,Object>> menuList;
+//	private List<Map<String,Object>> menuList;
+	private List<Menu> menuList;
 	private List<Map<String,Object>> parentMenuList;
 	
 	private Map<String,Object> menu;
@@ -74,11 +76,20 @@ public class MenuAction extends ActionSupport{
 	private String ico;
 	private Integer parent_id;
 	
-	public List<Map<String, Object>> getMenuList() {
+	
+//	public List<Map<String, Object>> getMenuList() {
+//		return menuList;
+//	}
+//
+//	public void setMenuList(List<Map<String, Object>> menuList) {
+//		this.menuList = menuList;
+//	}
+
+	public List<Menu> getMenuList() {
 		return menuList;
 	}
 
-	public void setMenuList(List<Map<String, Object>> menuList) {
+	public void setMenuList(List<Menu> menuList) {
 		this.menuList = menuList;
 	}
 
@@ -90,6 +101,7 @@ public class MenuAction extends ActionSupport{
 	public String execute() throws Exception {
 		try {
 			MenuDAO dao = new MenuDAO();
+//			menuList = dao.getMenuList();
 			menuList = dao.getMenuList();
 			System.out.println("MenuAction");
 			return 	SUCCESS;

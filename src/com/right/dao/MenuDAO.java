@@ -9,6 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
+
+import com.right.common.SessionFactory;
+import com.right.mapper.Menu;
+import com.right.mapper.MenuMapper;
+
 import jdk.nashorn.internal.runtime.ECMAException;
 
 public class MenuDAO {
@@ -22,29 +28,34 @@ public class MenuDAO {
 	/**
 	 * 获得菜单信息
 	 */
-	public List<Map<String, Object>> getMenuList() throws Exception {
-		try {
-			List<Map<String, Object>> menuList = new ArrayList<Map<String, Object>>();
-			// 连接数据库
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection(url, user, password);
-			// 提交查询语句
-			String sql = "select * from t_base_menu ";
-			PreparedStatement st = con.prepareStatement(sql);
-			ResultSet rs = st.executeQuery();
-			while (rs.next()) {
-				Map<String, Object> menu = new HashMap<String, Object>();
-				menu.put("id", rs.getInt("ID"));
-				menu.put("name", rs.getString("NAME"));
-				menu.put("url", rs.getString("URL"));
-				menu.put("ico", rs.getString("ICO"));
-				menuList.add(menu);
-			}
-			con.close();
-			return menuList;
-		} catch (Exception ex) {
-			throw ex;
-		}
+//	public List<Map<String, Object> getMenuList() throws Exception {
+	public List<Menu> getMenuList() throws Exception {
+		SqlSession session = SessionFactory.getSessionFactory().openSession();
+		MenuMapper obj = session.getMapper(MenuMapper.class);
+		return obj.selectAllMenu();
+		
+//		try {
+//			List<Map<String, Object>> menuList = new ArrayList<Map<String, Object>>();
+//			// 连接数据库
+//			Class.forName("com.mysql.jdbc.Driver");
+//			Connection con = DriverManager.getConnection(url, user, password);
+//			// 提交查询语句
+//			String sql = "select * from t_base_menu ";
+//			PreparedStatement st = con.prepareStatement(sql);
+//			ResultSet rs = st.executeQuery();
+//			while (rs.next()) {
+//				Map<String, Object> menu = new HashMap<String, Object>();
+//				menu.put("id", rs.getInt("ID"));
+//				menu.put("name", rs.getString("NAME"));
+//				menu.put("url", rs.getString("URL"));
+//				menu.put("ico", rs.getString("ICO"));
+//				menuList.add(menu);
+//			}
+//			con.close();
+//			return menuList;
+//		} catch (Exception ex) {
+//			throw ex;
+//		}
 		
 	}
 

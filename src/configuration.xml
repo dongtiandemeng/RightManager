@@ -13,7 +13,8 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper/>
+		<mapper resource="com/right/mapper/UserMapper.xml"/>
+		<mapper resource="com/right/mapper/MenuMapper.xml"/>
 	</mappers>
 </configuration>
 	

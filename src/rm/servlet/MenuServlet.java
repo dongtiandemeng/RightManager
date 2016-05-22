@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.right.dao.MenuDAO;
+import com.right.mapper.Menu;
 
 /**
  * Servlet implementation class MenuServlet
@@ -34,7 +35,8 @@ public class MenuServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		MenuDAO ma = new MenuDAO();			
-		List<Map<String, Object>> menuList;
+//		List<Map<String, Object>> menuList;
+		List<Menu>menuList;
 		try {
 			menuList = ma.getMenuList();
 			request.setAttribute("List", menuList);

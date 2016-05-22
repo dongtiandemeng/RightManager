@@ -5,6 +5,7 @@ import java.util.Map;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.right.dao.UserDAO;
+import com.right.mapper.User;
 
 public class LoginAction extends ActionSupport{
 
@@ -28,11 +29,12 @@ public class LoginAction extends ActionSupport{
 	@Override
 	public String execute() throws Exception {
 		// TODO Auto-generated method stub
-
+		System.out.println("LoginAction");
 		UserDAO dao = new UserDAO();
-		boolean retval = dao.validateUser(username, pwd);
-		
-		if(retval ==  true){
+//		boolean retval = dao.validateUser(username, pwd);
+		User user = dao.validateUser(username, pwd);
+		if(user!=null){
+//		if(retval ==  true){
 			ActionContext ac = ActionContext.getContext();
 			Map<String,Object> session = ac.getSession();
 			session.put("userinfo",username);	

@@ -15,7 +15,7 @@ function logout() {
 		//System.out.println("userInfo	"+request.getAttribute("userInfo"));
 		//原来setAttribute变成了
 		//System.out.println("top.jsp		 username	"+request.getAttribute("username"));
-		System.out.println("top.jsp	session	 username	"+session.getAttribute("username"));
+		//System.out.println("top.jsp	session	 username	"+session.getAttribute("username"));
 	%>
 <div class="col-md-12 navbar-inverse">
 

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.right.dao.UserDAO;
+import com.right.mapper.User;
 
 /**
  * Servlet implementation class LoginServlet
@@ -46,9 +47,11 @@ public class LoginServlet extends HttpServlet {
 		
 		// TODO Auto-generated method stub
 		UserDAO dao = new UserDAO();
-		boolean retval = dao.validateUser(name, pwd);
-		
-		if(retval==true){
+		User user = dao.validateUser(name, pwd);
+		if(user!=null){
+//		boolean retval = dao.validateUser(name, pwd);
+//		
+//		if(retval==true){
 		
 //		if(retval.equals("true")){
 			
