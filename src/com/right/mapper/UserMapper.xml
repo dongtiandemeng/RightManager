@@ -3,8 +3,106 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.right.mapper.UserMapper">
     <select id="validateUser" parameterType="map" resultType="com.right.mapper.User">
-        select  id ,name,loginname,loginname,password,address,mobilephone from t_base_user
-        where loginname=#{username} and password = #{password}
+        select  id ,name,loginname,password,address,mobilephone from t_base_user
+        where loginname=#{0} and password = #{1}
     </select>
     
+     <select id="selectUser" resultMap="UserMapper">
+        select *
+        from t_base_user
+    </select>
+    
+    
+     <resultMap type ="com.right.mapper.User" id="UserMapper">
+         <id property="id" column="id" />
+         <result property="name" column="name" />
+         <result property="loginname" column="loginname" />
+         <result property="password" column="password" />
+         <result property="email" column="email" />
+         <result property="address" column="address" />
+         <result property="mobilephone" column="mobilephone" />
+         <result property="status" column="status" />
+         <association property="role" column = "id"
+             javaType="com.right.mapper.Role"
+             select="selectRoleByUserId"
+             />
+     </resultMap>
+     
+     <select id="selectRoleByUserId" parameterType="Integer"
+         resultType="com.right.mapper.Role">
+         select r.id, r.name from t_base_user u
+         join t_base_user_role ur on u.id=ur.user_id
+         join t_base_role r on ur.role_id = r.id
+         where u.id=#{id}
+     </select>
+    <select id="selectAllRole" resultType="com.right.mapper.Role">
+        select * from t_base_role
+    </select>    
+    <insert id="save" parameterType="com.right.mapper.User" useGeneratedKeys="true" keyProperty="id">
+	    insert into t_base_user (status,address,email,loginname,mobilephone,name,password) 
+	    values (#{status}, #{address},#{email},#{loginname},#{mobilephone},#{name},#{password})
+	    
+    </insert>
+    
+    <insert id="insertUserRole" parameterType="Integer">
+        insert into t_base_user_role (user_id,role_id)
+        values (#{0},#{1})
+    </insert>
+    
+    <select id="selectUserByID" resultType = "com.right.mapper.User" parameterType="int">
+   	   select * from t_base_user 
+   	   where id = #{id} 
+   	</select>
+   	
+    <select id="selectRoleAndUserByUserId" resultMap="UserMapper">
+        select *
+        from t_base_user
+        where id = #{id}
+    </select>
+    <update id = "update" parameterType = "com.right.mapper.User">
+   	    update t_base_user 
+   	    set status = #{status},
+   	    address = #{address},
+   	    email = #{email},
+   	    loginname = #{loginname},
+   	    mobilephone = #{mobilephone},
+   	    name = #{name},
+   	    password = #{password} 	    
+   	    where id = #{id}
+   	</update>
+   	<select id="selectUserRoleById" parameterType="com.right.mapper.User" resultType="Integer">
+   		select * from t_base_user_role 
+   		where user_id = #{id}    
+   	</select>
+   	<update id="updateUserRole" parameterType="com.right.mapper.User">
+   		update t_base_user_role
+   		set user_id=#{id},
+   		role_id=#{role.id}    
+   		where user_id = #{id}
+   	</update>
+   	
+   	<insert id="insertUserRoleNoData" parameterType="com.right.mapper.User">
+   	    insert into t_base_user_role (user_id,role_id)
+   	    values (#{id},#{role.id})
+   	</insert>
+   	
+    <delete id="batchDelete">
+        delete from t_base_user
+        where id in
+        <foreach collection="list" open="(" close=")"
+            index="index" item="item" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    
+    <delete id="batchDeleteUserAndRole">
+        delete from t_base_user_role
+        where user_id in
+        <foreach collection="list" open="(" close=")"
+            index="index" item="item" separator=",">
+            #{item}
+        </foreach>
+    </delete>    
+    
+
 </mapper>

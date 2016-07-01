@@ -1,6 +1,7 @@
 package com.chen;
 
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -13,9 +14,15 @@ import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import org.apache.log4j.Logger;
+
+import com.opensymphony.xwork2.ActionContext;
+import com.right.action.LoginAction;
+
 public class OnlineUserList implements HttpSessionAttributeListener,HttpSessionListener,
 ServletContextListener{
 	
+	private static Logger logger = Logger.getLogger(OnlineUserList.class);  
 	private ServletContext app =null;
 	public OnlineUserList() {
 		// TODO Auto-generated constructor stub
@@ -52,6 +59,14 @@ ServletContextListener{
 //		}
 		
 		//end
+		
+		ActionContext ac = ActionContext.getContext();
+		Map<String,Object> session = ac.getSession();
+		session.get("userinfo");
+		
+		
+		//is not 软件142
+		
 		System.out.println("add getValue"+arg0.getValue());
 		all.add(arg0.getValue());
 		this.app.setAttribute("online", all);
@@ -77,10 +92,10 @@ ServletContextListener{
 		//要让session失效，必须调用session.invalidate或者设置超时
 		System.out.println("sessionDestroyed");
 		Set all = (Set) this.app.getAttribute("online");
-		System.out.println("sessionDestroyed arg0.getSession().getAttribute"+arg0.getSession().getAttribute("userInfo"));
+		System.out.println("sessionDestroyed arg0.getSession().getAttribute"+arg0.getSession().getAttribute("userinfo"));
 		
-		if(arg0.getSession().getAttribute("userInfo")!=null){		
-			all.remove(arg0.getSession().getAttribute("userInfo"));
+		if(arg0.getSession().getAttribute("userinfo")!=null){		
+			all.remove(arg0.getSession().getAttribute("userinfo"));
 			this.app.setAttribute("online", all);
 			System.out.println("从列表中删除这个用户");
 		}

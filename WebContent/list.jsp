@@ -24,9 +24,11 @@
 %>
 	<!-- 退出要提交表单的，提交表单之后再设置session退出？ -->
 		
-	<a href="check_logout.jsp" >安全退出
+	<a href="login!exit.action" >安全退出
 	</a>
 	<!-- 
+	<a href="check_logout.jsp" >安全退出
+	</a>
 	退出就从列表中删除数据
 	这里需要点击按钮，再让session失效，我不知道在javaScript中是不是可以调用JSp语句，好像不可以，那怎么点击按钮之后再让session失效呢？
 	目的：点击按钮就让session失效，或者关掉浏览器就要让session失效

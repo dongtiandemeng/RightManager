@@ -4,7 +4,7 @@
 <script language="javascript">
 //注销
 function logout() {
-	window.location.href = "check_logout.jsp";
+	window.location.href = "logout.action";
 }
 </script>
 

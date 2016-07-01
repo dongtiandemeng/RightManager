@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.right.mapper.DictTypeMapper">
+	<resultMap type="com.right.mapper.DictType" id = "DictTypeMap">
+	    <id property = "id" column= "id"/>
+	    <result property="code" column ="code"/>
+	    <result property="name" column="name"/>
+	    <collection property="dicts" column = "code" ofType="com.right.mapper.Dict" javaType="List"
+	        select = "selectDictByTypeCode">
+	    </collection>
+	</resultMap>
+    
+	<select id="selectDictByTypeCode"  parameterType="String"
+	    resultType="com.right.mapper.Dict">
+	    select id,name,code from t_sys_dictionary 
+	    where dictionaryType_code = #{code}
+	</select>
+	
+	<select id = "selectDictType" resultMap="DictTypeMap">
+	    select id,code,name from t_sys_dictionaryType
+	</select>
+	
+	
+   	<select id="selectParentMenu" resultType="com.right.mapper.Menu">
+  	    select id,name from t_base_menu
+  	    where parent_id is null
+   	</select>
+   	
+   	<insert id = "save" parameterType= "com.right.mapper.DictType"
+   	    useGeneratedKeys = "true" keyProperty = "id">
+   	    insert into t_sys_dictionaryType(code,name)
+   	    values(#{code},#{name})
+   	</insert>
+   	
+   	<select id="selectDictTypeByID" resultType = "com.right.mapper.DictType" parameterType="int">
+   	   select * from t_sys_dictionaryType 
+   	   where id = #{id} 
+   	</select>
+   	
+   	<update id = "update" parameterType = "com.right.mapper.DictType">
+   	    update t_sys_dictionaryType 
+   	    set name = #{name},
+   	    code = #{code}
+   	    where id = #{id}
+   	</update>
+   	
+   	 <delete id="batchDelete">
+        delete from t_sys_dictionaryType
+        where id in
+        <foreach collection="list" open="(" close=")"
+            index="index" item="item" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

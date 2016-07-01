@@ -6,7 +6,11 @@
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
 				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<!-- 
 				<property name="url" value="jdbc:mysql://172.16.123.161/rightdb" />
+				 -->
+				
+				<property name="url" value="jdbc:mysql://127.0.0.1/rightdb" />
 				<property name="username" value="root" />
 				<property name="password" value="123456" />
 			</dataSource>
@@ -15,6 +19,10 @@
 	<mappers>
 		<mapper resource="com/right/mapper/UserMapper.xml"/>
 		<mapper resource="com/right/mapper/MenuMapper.xml"/>
+		<mapper resource="com/right/mapper/DictTypeMapper.xml"/>
+		<mapper resource="com/right/mapper/RoleMapper.xml"/>
+ 		<mapper resource="com/right/mapper/DictMapper.xml"/>
+		<mapper resource="com/right/mapper/OnlineUserMapper.xml"/> 			
 	</mappers>
 </configuration>
 	

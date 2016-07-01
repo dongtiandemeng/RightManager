@@ -2,8 +2,72 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.right.mapper.MenuMapper">
-    <select id="selectAllMenu" resultType="com.right.mapper.Menu">
-        select id,name,url,ico,parent_id
-        from t_base_menu
-    </select>
+
+   	<select id="selectParentMenu" resultType="com.right.mapper.Menu">
+   	    select id,name from t_base_menu
+   	    where parent_id is null
+   	</select>
+   	
+   	<select id="selectMenuByID" resultType = "com.right.mapper.Menu" parameterType="int">
+   	   select id,name,url,parent_id,ico from t_base_menu 
+   	   where id = #{id} 
+   	</select>
+   	
+   	<insert id = "save" parameterType= "com.right.mapper.Menu"
+   	    useGeneratedKeys = "true" keyProperty = "id">
+   	    insert into t_base_menu(name,ico,url,parent_id)
+   	    values(#{name},#{ico},#{url},#{parent_id})
+   	</insert>
+   	
+   	<insert id= "batchSave">
+   	    insert into t_base_menu(name,ico,url,parent_id)
+   	    values
+   	    <foreach collection="list" item="menu" index="index"
+   	        separator=",">
+ 			(#{menu.name},#{menu.ico},#{menu.url},#{menu.parent_id})  
+ 				        
+   	    </foreach>
+   	</insert>
+   	
+   	<update id = "update" parameterType = "com.right.mapper.Menu">
+   	    update t_base_menu 
+   	    set name = #{name},
+   	    ico = #{ico},
+   	    url = #{url},
+   	    parent_id = #{parent_id}
+   	    where id = #{id}
+   	</update>
+   	<delete id = "delete" parameterType = "int">
+   	    delete from t_base_menu
+   	    where id = #{id}
+   	</delete>
+   	<delete id="batchDelete">
+   	    delete from t_base_menu
+   	    where id in
+   	    <foreach collection="list" item="item" index="index"
+   	        open="(" close=")" separator=",">
+   	        #{item}
+   	    </foreach>
+   	</delete>
+   	
+   	<resultMap type="com.right.mapper.Menu" id = "MenuMap">
+   	    <id property="id" column="id"/>
+   	    <result property="name" column="name"/>
+   	    <result property="ico" column="ico"/>
+   	    <result property="url" column="url"/>
+   	    <result property="parent_id" column="parent_id"/>
+   	    <association property ="parent_menu" column="parent_id"
+   	        javaType="com.right.mapper.Menu"
+   	        select="selectParentMenuByID"/>
+   	</resultMap>
+   	
+   	<select id="selectParentMenuByID" parameterType="Integer"
+   	    resultType="com.right.mapper.Menu">
+   	    select id,name from t_base_menu
+   	    where id=#{id}
+   	</select>
+   	<select id ="selectAllMenu" resultMap="MenuMap">
+   	    select id,name,url,ico,parent_id
+   	    from t_base_menu
+   	</select>
 </mapper>

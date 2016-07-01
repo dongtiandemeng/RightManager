@@ -42,6 +42,7 @@ public class LoginInterceptor implements Interceptor{
 		System.out.println("getServletPath  "+path);
 		if(path.contains("login.action"))
 			return arg0.invoke();
+		
 		Map<String,Object> session = ActionContext.getContext().getSession();
 		System.out.println("LoginInterceptor");
 		if(session.get("userinfo")!=null){
@@ -51,6 +52,8 @@ public class LoginInterceptor implements Interceptor{
 			System.out.println("return");
 			return "login";
 		}
+		
+//		return arg0.invoke();
 		
 	}
 

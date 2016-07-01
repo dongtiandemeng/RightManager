@@ -16,7 +16,7 @@
       <form class="form-signin" action="login.action" method="post">
         <h2 class="form-signin-heading">请登录</h2>
         <label for="inputUsername" class="sr-only">用户名</label>
-        <input type="text" id="username" name="username" value="soft142" class="form-control" placeholder="用户名" required autofocus>
+        <input type="text" id="username" name="username" value="soft141" class="form-control" placeholder="用户名" required autofocus>
         <label for="inputPassword" class="sr-only">密码</label>
         <input type="password" id="password" name="pwd" value="abc123" class="form-control" placeholder="密码" required>
         <div class="checkbox">

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.right.mapper.OnlineUserMapper">
+         <!-- 在线用户,
+     	首先登录时查询t_online_user，没有再插入username And logintime,
+     	如果查询t_online_user有，就说明用户已经登陆，请不要重复登陆
+     	退出时删除 t_online_user-->
+    <select id="selectOnlineUser" resultType="com.right.mapper.OnlineUser">
+        select * from t_online_user
+        where username = #{0}
+    </select>
+    <insert id="insertOnlineUser">
+        insert into t_online_user
+        (username,logintime)
+        values (#{0},#{1})
+    </insert>
+    <delete id="deleteOnlineUser">
+        delete from t_online_user
+        where username=#{username} 
+    </delete>
+</mapper>

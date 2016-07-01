@@ -10,7 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
 
+import com.right.action.MenuAction;
+import com.right.common.MySqlSession;
 import com.right.common.SessionFactory;
 import com.right.mapper.Menu;
 import com.right.mapper.MenuMapper;
@@ -62,6 +65,8 @@ public class MenuDAO {
 	/**
 	 * 获得菜单信息
 	 */
+	
+	/*
 	public Map<String, Object> getMenuByID(String id) {
 		try {
 			Map<String, Object> menu = null;
@@ -88,9 +93,12 @@ public class MenuDAO {
 		return null;
 	}
 
+	*/
+	
 	/**
 	 * 获得父菜单信息
 	 */
+	/*
 	public List<Map<String, Object>> getParentMenuList() {
 		try {
 			List<Map<String, Object>> menuList = new ArrayList<Map<String, Object>>();
@@ -114,10 +122,18 @@ public class MenuDAO {
 		}
 		return null;
 	}
+	*/
+	public List<Menu> getParentMenuList() throws Exception{
+		SqlSession session = MySqlSession.getSqlSeesion();
+		MenuMapper obj = session.getMapper(MenuMapper.class);
+		return obj.selectParentMenu();
+	}
 
 	/**
 	 * 保存菜单信息
 	 */
+	
+	/*
 	public void save(Map<String, Object> menu) {
 		try {
 			// 连接数据库
@@ -157,4 +173,58 @@ public class MenuDAO {
 			ex.printStackTrace();
 		}
 	}
+	
+	*/
+	/**
+	 * 获得菜单信息
+	 */
+	
+	public Menu getMenuByID(Integer id){
+		SqlSession session = MySqlSession.getSqlSeesion();
+		MenuMapper obj = session.getMapper(MenuMapper.class);
+		
+		return obj.selectMenuByID(id);
+	}
+	
+	/**
+	 * 保存菜单信息
+	 */
+	public void save (Menu menu) throws Exception {
+		SqlSession session = MySqlSession.getSqlSeesion();
+		MenuMapper obj = session.getMapper(MenuMapper.class);
+		obj.save(menu);
+	}
+	
+	
+	public void batchSave(List<Menu>menus)throws Exception{
+		SqlSession session = MySqlSession.getSqlSeesion();
+		MenuMapper obj = session.getMapper(MenuMapper.class);
+		obj.batchSave(menus);
+	}
+	
+	public void update(Menu menu){
+		try {
+			SqlSession session = MySqlSession.getSqlSeesion();
+			MenuMapper obj = session.getMapper(MenuMapper.class);
+
+
+			obj.update(menu);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+	}
+	
+	public void delete(Integer id){
+		SqlSession session = MySqlSession.getSqlSeesion();
+		MenuMapper obj = session.getMapper(MenuMapper.class);
+		obj.delete(id);
+	}
+	
+	public void batchDelete(List<Integer>ids)throws Exception{
+		SqlSession session = MySqlSession.getSqlSeesion();
+		MenuMapper obj = session.getMapper(MenuMapper.class);
+		obj.batchDelete(ids);
+	}
+	private static Logger logger = Logger.getLogger(MenuAction.class);  
 }

@@ -2,21 +2,60 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
+    <!-- 开启使用开发模式，详细错误提示 --> 
+    <constant name="struts.devMode" value="false" /> 
  	 <constant name="struts.multipart.saveDir" value="C:\Users\chenbin\Desktop" />
     <package name="system"  extends="base">
         
         <action name="login" class="com.right.action.LoginAction">
             <result name="success">index.jsp</result>
             <result name="error">failure.jsp</result>
+            <result name="repeat">failure.jsp</result>
+
+        </action>
+        
+        <action name="logout" class="com.right.action.LogoutAction">
+             <result name="reLogin">login.jsp</result>
         </action>
         <action name="menu" class="com.right.action.MenuAction" >
             <result name="success">menu.jsp</result>
             <result name="insert">menu_insert.jsp</result>
             <result name="ok" type="redirectAction">menu</result>
             <result name="modify" >menu_modify.jsp</result>
+            <result name="delete" >menu_delete.jsp</result>
         </action>
         <action name="upload" class="com.right.action.UploadAction">
             <result name="success">index.jsp</result>
         </action>
+        
+        <action name="user" class="com.right.action.UserAction">
+            <result name="success">User.jsp</result>
+            <result name="insert">User_insert.jsp</result>
+            <result name="ok" type="redirectAction">user</result>
+            <result name="modify" >User_modify.jsp</result>
+            <result name="delete" >User_delete.jsp</result>
+        </action>
+        <action name="dictType" class="com.right.action.DictTypeAction">
+            <result name="success">DictType.jsp</result>
+            <result name="insert">DictType_insert.jsp</result>
+             <result name="ok" type="redirectAction">dictType</result>
+             <result name="modify" >DictType_modify.jsp</result>
+              <result name="delete" >DictType_delete.jsp</result>
+        </action>
+        <action name="role" class="com.right.action.RoleAction">
+            <result name="success">role.jsp</result>
+            <result name="insert">Role_insert.jsp</result>
+             <result name="ok" type="redirectAction">role</result>
+             <result name="modify" >Role_modify.jsp</result>
+            <result name="delete" >Role_delete.jsp</result>
+        </action>
+        <action name="dict" class="com.right.action.DictAction">
+            <result name="success">Dict.jsp</result>
+            <result name="insert">Dict_insert.jsp</result>
+            <result name="ok" type="redirectAction">dict</result>
+            <result name="modify" >Dict_modify.jsp</result>
+             <result name="delete" >Dict_delete.jsp</result>
+        </action>
+        
     </package>
 </struts>
